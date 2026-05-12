@@ -1,0 +1,14 @@
+import type { Vendor } from "@/types/vendor";
+
+export const mockVendors: Vendor[] = [
+  { id: "VND-001", name: "TechBuzz India", email: "contact@techbuzz.in", phone: "+91 98765 00001", category: "Electronics", productsCount: 48, totalRevenue: 2845000, commissionRate: 12, rating: 4.6, fulfillmentRate: 96.5, returnRate: 2.1, status: "active", joinedAt: "2024-03-15T00:00:00Z" },
+  { id: "VND-002", name: "GadgetWorld", email: "info@gadgetworld.in", phone: "+91 98765 00002", category: "Electronics", productsCount: 35, totalRevenue: 1956000, commissionRate: 10, rating: 4.7, fulfillmentRate: 98.2, returnRate: 1.5, status: "active", joinedAt: "2024-06-01T00:00:00Z" },
+  { id: "VND-003", name: "UrbanCraft", email: "hello@urbancraft.in", phone: "+91 98765 00003", category: "Fashion", productsCount: 120, totalRevenue: 3210000, commissionRate: 15, rating: 4.3, fulfillmentRate: 94.8, returnRate: 4.2, status: "active", joinedAt: "2024-01-10T00:00:00Z" },
+  { id: "VND-004", name: "NatureBrew", email: "sales@naturebrew.in", phone: "+91 98765 00004", category: "Food & Beverages", productsCount: 28, totalRevenue: 890000, commissionRate: 8, rating: 4.8, fulfillmentRate: 99.1, returnRate: 0.8, status: "active", joinedAt: "2024-09-20T00:00:00Z" },
+  { id: "VND-005", name: "EcoLiving", email: "care@ecoliving.in", phone: "+91 98765 00005", category: "Home & Kitchen", productsCount: 65, totalRevenue: 1450000, commissionRate: 11, rating: 4.4, fulfillmentRate: 95.3, returnRate: 3.1, status: "active", joinedAt: "2024-04-05T00:00:00Z" },
+  { id: "VND-006", name: "FitZone", email: "support@fitzone.in", phone: "+91 98765 00006", category: "Sports & Fitness", productsCount: 42, totalRevenue: 1120000, commissionRate: 13, rating: 4.5, fulfillmentRate: 97.0, returnRate: 2.5, status: "active", joinedAt: "2024-07-15T00:00:00Z" },
+  { id: "VND-007", name: "StridePro", email: "info@stridepro.in", phone: "+91 98765 00007", category: "Fashion", productsCount: 38, totalRevenue: 980000, commissionRate: 14, rating: 4.2, fulfillmentRate: 93.5, returnRate: 5.0, status: "active", joinedAt: "2024-11-01T00:00:00Z" },
+  { id: "VND-008", name: "BookHaven", email: "hello@bookhaven.in", phone: "+91 98765 00008", category: "Books", productsCount: 250, totalRevenue: 560000, commissionRate: 7, rating: 4.9, fulfillmentRate: 99.5, returnRate: 0.3, status: "active", joinedAt: "2024-02-28T00:00:00Z" },
+  { id: "VND-009", name: "GlowUp Beauty", email: "hi@glowup.in", phone: "+91 98765 00009", category: "Beauty", productsCount: 0, totalRevenue: 0, commissionRate: 12, rating: 0, fulfillmentRate: 0, returnRate: 0, status: "pending", joinedAt: "2026-05-10T00:00:00Z" },
+  { id: "VND-010", name: "QuickBite Foods", email: "order@quickbite.in", phone: "+91 98765 00010", category: "Food & Beverages", productsCount: 15, totalRevenue: 120000, commissionRate: 9, rating: 3.2, fulfillmentRate: 82.0, returnRate: 8.5, status: "suspended", joinedAt: "2025-01-15T00:00:00Z" },
+];
