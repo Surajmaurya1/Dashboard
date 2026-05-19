@@ -8,7 +8,7 @@ import { RecentOrders } from "@/components/dashboard/recent-orders";
 import { ActivityFeed } from "@/components/dashboard/activity-feed";
 import { LowStockAlerts } from "@/components/dashboard/low-stock-alerts";
 import { useDashboard } from "@/providers/dashboard-provider";
-import { mockOverview } from "@/data/mock-analytics";
+
 import {
   IndianRupee,
   ShoppingCart,
@@ -25,20 +25,22 @@ function formatCurrency(value: number): string {
 }
 
 export default function OverviewPage() {
-  const { orders, customers } = useDashboard();
+  const { orders, customers, overview, loading } = useDashboard();
   
   const totalRevenue = orders.reduce((sum, order) => sum + order.totalAmount, 0);
   const totalOrders = orders.length;
   const activeCustomers = customers.length;
   const avgOrderValue = totalOrders > 0 ? totalRevenue / totalOrders : 0;
 
+  if (loading || !overview) return <div className="flex items-center justify-center h-64 text-muted-foreground">Loading...</div>;
+
   const stats = [
-    { title: "Total Revenue", value: formatCurrency(totalRevenue), change: mockOverview.revenueGrowth, icon: IndianRupee },
-    { title: "Total Orders", value: totalOrders.toLocaleString(), change: mockOverview.ordersGrowth, icon: ShoppingCart },
-    { title: "Active Customers", value: activeCustomers.toLocaleString(), change: mockOverview.customersGrowth, icon: Users },
-    { title: "Active Vendors", value: mockOverview.activeVendors.toLocaleString(), change: mockOverview.vendorsGrowth, icon: Store },
-    { title: "Conversion Rate", value: `${mockOverview.conversionRate}%`, change: mockOverview.conversionGrowth, icon: TrendingUp },
-    { title: "Avg Order Value", value: formatCurrency(avgOrderValue), change: mockOverview.aovGrowth, icon: Receipt },
+    { title: "Total Revenue", value: formatCurrency(totalRevenue), change: overview.revenueGrowth, icon: IndianRupee },
+    { title: "Total Orders", value: totalOrders.toLocaleString(), change: overview.ordersGrowth, icon: ShoppingCart },
+    { title: "Active Customers", value: activeCustomers.toLocaleString(), change: overview.customersGrowth, icon: Users },
+    { title: "Active Vendors", value: overview.activeVendors.toLocaleString(), change: overview.vendorsGrowth, icon: Store },
+    { title: "Conversion Rate", value: `${overview.conversionRate}%`, change: overview.conversionGrowth, icon: TrendingUp },
+    { title: "Avg Order Value", value: formatCurrency(avgOrderValue), change: overview.aovGrowth, icon: Receipt },
   ];
 
   return (

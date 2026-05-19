@@ -3,7 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { mockTransactions } from "@/data/mock-analytics";
+import { useDashboard } from "@/providers/dashboard-provider";
 import { IndianRupee, ArrowUpRight, ArrowDownRight, Clock } from "lucide-react";
 import { useState } from "react";
 
@@ -16,12 +16,13 @@ const statusColors: Record<string, string> = {
 };
 
 export default function TransactionsPage() {
+  const { transactions } = useDashboard();
   const [methodFilter, setMethodFilter] = useState("all");
-  const filtered = methodFilter === "all" ? mockTransactions : mockTransactions.filter((t) => t.method === methodFilter);
+  const filtered = methodFilter === "all" ? transactions : transactions.filter((t) => t.method === methodFilter);
 
-  const totalSuccess = mockTransactions.filter((t) => t.status === "success").reduce((s, t) => s + t.amount, 0);
-  const totalRefunded = mockTransactions.filter((t) => t.status === "refunded").reduce((s, t) => s + t.amount, 0);
-  const totalPending = mockTransactions.filter((t) => t.status === "pending").reduce((s, t) => s + t.amount, 0);
+  const totalSuccess = transactions.filter((t) => t.status === "success").reduce((s, t) => s + t.amount, 0);
+  const totalRefunded = transactions.filter((t) => t.status === "refunded").reduce((s, t) => s + t.amount, 0);
+  const totalPending = transactions.filter((t) => t.status === "pending").reduce((s, t) => s + t.amount, 0);
 
   return (
     <div className="space-y-6">

@@ -2,11 +2,12 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { mockProducts } from "@/data/mock-products";
+import { useDashboard } from "@/providers/dashboard-provider";
 import { AlertTriangle, Package, CheckCircle } from "lucide-react";
 
 export default function InventoryPage() {
-  const sortedProducts = [...mockProducts].sort((a, b) => a.stock - b.stock);
+  const { products } = useDashboard();
+  const sortedProducts = [...products].sort((a, b) => a.stock - b.stock);
   const outOfStock = sortedProducts.filter((p) => p.stock === 0).length;
   const lowStock = sortedProducts.filter((p) => p.stock > 0 && p.stock <= p.reorderLevel).length;
   const inStock = sortedProducts.filter((p) => p.stock > p.reorderLevel).length;

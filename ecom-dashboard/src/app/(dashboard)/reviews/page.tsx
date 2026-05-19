@@ -3,7 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { mockReviews } from "@/data/mock-analytics";
+import { useDashboard } from "@/providers/dashboard-provider";
 import { Star, CheckCircle, Flag, Trash2 } from "lucide-react";
 
 const statusConfig: Record<string, { color: string; icon: typeof CheckCircle }> = {
@@ -13,6 +13,8 @@ const statusConfig: Record<string, { color: string; icon: typeof CheckCircle }> 
 };
 
 export default function ReviewsPage() {
+  const { reviews } = useDashboard();
+
   return (
     <div className="space-y-6">
       <div>
@@ -22,9 +24,9 @@ export default function ReviewsPage() {
 
       <div className="grid gap-4 grid-cols-1 sm:grid-cols-3">
         {[
-          { label: "Approved", count: mockReviews.filter((r) => r.status === "approved").length, color: "text-emerald-600 dark:text-emerald-400" },
-          { label: "Pending", count: mockReviews.filter((r) => r.status === "pending").length, color: "text-amber-600 dark:text-amber-400" },
-          { label: "Flagged", count: mockReviews.filter((r) => r.status === "flagged").length, color: "text-red-600 dark:text-red-400" },
+          { label: "Approved", count: reviews.filter((r) => r.status === "approved").length, color: "text-emerald-600 dark:text-emerald-400" },
+          { label: "Pending", count: reviews.filter((r) => r.status === "pending").length, color: "text-amber-600 dark:text-amber-400" },
+          { label: "Flagged", count: reviews.filter((r) => r.status === "flagged").length, color: "text-red-600 dark:text-red-400" },
         ].map((s) => (
           <Card key={s.label}><CardContent className="p-4 text-center"><p className={`text-2xl font-bold ${s.color}`}>{s.count}</p><p className="text-xs text-muted-foreground mt-1">{s.label}</p></CardContent></Card>
         ))}
@@ -33,7 +35,7 @@ export default function ReviewsPage() {
       <Card>
         <CardHeader><CardTitle className="text-base font-semibold">All Reviews</CardTitle></CardHeader>
         <CardContent className="space-y-4">
-          {mockReviews.map((review) => {
+          {reviews.map((review) => {
             const config = statusConfig[review.status];
             return (
               <div key={review.id} className="flex items-start gap-4 p-4 rounded-lg border border-border/50 hover:bg-muted/30 transition-colors">

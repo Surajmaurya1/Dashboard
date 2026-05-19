@@ -4,15 +4,16 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { mockVendors } from "@/data/mock-vendors";
+import { useDashboard } from "@/providers/dashboard-provider";
 import { vendorStatusColors } from "@/lib/constants";
 import { Star, CheckCircle, XCircle, Store } from "lucide-react";
 import { useState } from "react";
 
 export default function VendorsPage() {
+  const { vendors } = useDashboard();
   const [tab, setTab] = useState("all");
 
-  const filtered = tab === "all" ? mockVendors : mockVendors.filter((v) => v.status === tab);
+  const filtered = tab === "all" ? vendors : vendors.filter((v) => v.status === tab);
 
   return (
     <div className="space-y-6">
@@ -26,9 +27,9 @@ export default function VendorsPage() {
       {/* Summary */}
       <div className="grid gap-4 grid-cols-1 sm:grid-cols-3">
         {[
-          { label: "Active Vendors", count: mockVendors.filter((v) => v.status === "active").length, icon: Store, color: "text-emerald-600 dark:text-emerald-400" },
-          { label: "Pending Approval", count: mockVendors.filter((v) => v.status === "pending").length, icon: CheckCircle, color: "text-amber-600 dark:text-amber-400" },
-          { label: "Suspended", count: mockVendors.filter((v) => v.status === "suspended").length, icon: XCircle, color: "text-red-600 dark:text-red-400" },
+          { label: "Active Vendors", count: vendors.filter((v) => v.status === "active").length, icon: Store, color: "text-emerald-600 dark:text-emerald-400" },
+          { label: "Pending Approval", count: vendors.filter((v) => v.status === "pending").length, icon: CheckCircle, color: "text-amber-600 dark:text-amber-400" },
+          { label: "Suspended", count: vendors.filter((v) => v.status === "suspended").length, icon: XCircle, color: "text-red-600 dark:text-red-400" },
         ].map((s) => (
           <Card key={s.label}>
             <CardContent className="p-4 flex items-center gap-4">
@@ -41,7 +42,7 @@ export default function VendorsPage() {
 
       <Tabs value={tab} onValueChange={setTab}>
         <TabsList>
-          <TabsTrigger value="all">All ({mockVendors.length})</TabsTrigger>
+          <TabsTrigger value="all">All ({vendors.length})</TabsTrigger>
           <TabsTrigger value="active">Active</TabsTrigger>
           <TabsTrigger value="pending">Pending</TabsTrigger>
           <TabsTrigger value="suspended">Suspended</TabsTrigger>

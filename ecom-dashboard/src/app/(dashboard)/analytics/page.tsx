@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { mockRevenueData } from "@/data/mock-analytics";
+import { useDashboard } from "@/providers/dashboard-provider";
 import { Area, AreaChart, Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 
@@ -15,6 +15,7 @@ const categorySales = [
 ];
 
 export default function AnalyticsPage() {
+  const { revenueData } = useDashboard();
   return (
     <div className="space-y-6">
       <div>
@@ -30,7 +31,7 @@ export default function AnalyticsPage() {
         </CardHeader>
         <CardContent>
           <ChartContainer config={{ revenue: { label: "This Year", color: "var(--color-chart-1)" }, prevRevenue: { label: "Last Year", color: "var(--color-chart-4)" } }} className="h-[350px] w-full">
-            <AreaChart data={mockRevenueData} margin={{ top: 5, right: 10, left: 10, bottom: 0 }}>
+            <AreaChart data={revenueData} margin={{ top: 5, right: 10, left: 10, bottom: 0 }}>
               <defs>
                 <linearGradient id="revGrad" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="5%" stopColor="var(--color-chart-1)" stopOpacity={0.3} />
