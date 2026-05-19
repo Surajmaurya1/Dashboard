@@ -2,11 +2,12 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { useDashboard } from "@/providers/dashboard-provider";
-import { AlertTriangle, Package, CheckCircle } from "lucide-react";
+import { AlertTriangle, Package, CheckCircle, Plus } from "lucide-react";
 
 export default function InventoryPage() {
-  const { products } = useDashboard();
+  const { products, updateProduct } = useDashboard();
   const sortedProducts = [...products].sort((a, b) => a.stock - b.stock);
   const outOfStock = sortedProducts.filter((p) => p.stock === 0).length;
   const lowStock = sortedProducts.filter((p) => p.stock > 0 && p.stock <= p.reorderLevel).length;
@@ -52,6 +53,7 @@ export default function InventoryPage() {
                   <th className="text-left py-3 px-3 font-medium">Current Stock</th>
                   <th className="text-left py-3 px-3 font-medium hidden sm:table-cell">Reorder Level</th>
                   <th className="text-left py-3 px-3 font-medium">Status</th>
+                  <th className="text-left py-3 px-3 font-medium">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -67,6 +69,26 @@ export default function InventoryPage() {
                         {status === "out" ? <Badge variant="destructive" className="text-xs">Out of Stock</Badge>
                           : status === "low" ? <Badge className="bg-amber-500/15 text-amber-700 dark:text-amber-400 border-0 text-xs">Low Stock</Badge>
                           : <Badge className="bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border-0 text-xs">In Stock</Badge>}
+                      </td>
+                      <td className="py-3 px-3">
+                        <div className="flex items-center gap-1.5">
+                          <Button
+                            size="xs"
+                            variant="outline"
+                            onClick={() => updateProduct(p.id, { stock: p.stock + 10 })}
+                            className="h-7 px-2 text-xs font-normal"
+                          >
+                            <Plus className="h-3 w-3 mr-0.5" /> 10
+                          </Button>
+                          <Button
+                            size="xs"
+                            variant="outline"
+                            onClick={() => updateProduct(p.id, { stock: p.stock + 50 })}
+                            className="h-7 px-2 text-xs font-normal"
+                          >
+                            <Plus className="h-3 w-3 mr-0.5" /> 50
+                          </Button>
+                        </div>
                       </td>
                     </tr>
                   );
