@@ -6,6 +6,7 @@ import { OrdersChart } from "@/components/dashboard/orders-chart";
 import { TopProducts } from "@/components/dashboard/top-products";
 import { RecentOrders } from "@/components/dashboard/recent-orders";
 import { ActivityFeed } from "@/components/dashboard/activity-feed";
+import { useDashboard } from "@/providers/dashboard-provider";
 import { mockOverview } from "@/data/mock-analytics";
 import {
   IndianRupee,
@@ -23,13 +24,20 @@ function formatCurrency(value: number): string {
 }
 
 export default function OverviewPage() {
+  const { orders, customers } = useDashboard();
+  
+  const totalRevenue = orders.reduce((sum, order) => sum + order.totalAmount, 0);
+  const totalOrders = orders.length;
+  const activeCustomers = customers.length;
+  const avgOrderValue = totalOrders > 0 ? totalRevenue / totalOrders : 0;
+
   const stats = [
-    { title: "Total Revenue", value: formatCurrency(mockOverview.totalRevenue), change: mockOverview.revenueGrowth, icon: IndianRupee },
-    { title: "Total Orders", value: mockOverview.totalOrders.toLocaleString(), change: mockOverview.ordersGrowth, icon: ShoppingCart },
-    { title: "Active Customers", value: mockOverview.activeCustomers.toLocaleString(), change: mockOverview.customersGrowth, icon: Users },
+    { title: "Total Revenue", value: formatCurrency(totalRevenue), change: mockOverview.revenueGrowth, icon: IndianRupee },
+    { title: "Total Orders", value: totalOrders.toLocaleString(), change: mockOverview.ordersGrowth, icon: ShoppingCart },
+    { title: "Active Customers", value: activeCustomers.toLocaleString(), change: mockOverview.customersGrowth, icon: Users },
     { title: "Active Vendors", value: mockOverview.activeVendors.toLocaleString(), change: mockOverview.vendorsGrowth, icon: Store },
     { title: "Conversion Rate", value: `${mockOverview.conversionRate}%`, change: mockOverview.conversionGrowth, icon: TrendingUp },
-    { title: "Avg Order Value", value: formatCurrency(mockOverview.avgOrderValue), change: mockOverview.aovGrowth, icon: Receipt },
+    { title: "Avg Order Value", value: formatCurrency(avgOrderValue), change: mockOverview.aovGrowth, icon: Receipt },
   ];
 
   return (

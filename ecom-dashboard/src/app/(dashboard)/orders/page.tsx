@@ -5,17 +5,19 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { mockOrders } from "@/data/mock-orders";
 import { orderStatusColors, paymentStatusColors } from "@/lib/constants";
-import { Search, Download, Filter } from "lucide-react";
+import { Search, Download, Filter, MoreVertical, CheckCircle, Truck, Package, XCircle, RotateCcw } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import { useDashboard } from "@/providers/dashboard-provider";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 export default function OrdersPage() {
+  const { orders, updateOrderStatus } = useDashboard();
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
 
-  const filtered = mockOrders.filter((order) => {
+  const filtered = orders.filter((order) => {
     const matchesSearch = search === "" || order.id.toLowerCase().includes(search.toLowerCase()) || order.customerName.toLowerCase().includes(search.toLowerCase());
     const matchesStatus = statusFilter === "all" || order.status === statusFilter;
     return matchesSearch && matchesStatus;
@@ -79,6 +81,7 @@ export default function OrdersPage() {
                   <th className="text-left py-3 px-3 font-medium hidden sm:table-cell">Payment</th>
                   <th className="text-left py-3 px-3 font-medium">Status</th>
                   <th className="text-left py-3 px-3 font-medium hidden lg:table-cell">Date</th>
+                  <th className="text-right py-3 px-3 font-medium">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -102,6 +105,24 @@ export default function OrdersPage() {
                       <Badge variant="secondary" className={`${orderStatusColors[order.status]} border-0 capitalize text-xs`}>{order.status}</Badge>
                     </td>
                     <td className="py-3 px-3 text-muted-foreground hidden lg:table-cell">{new Date(order.createdAt).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}</td>
+                    <td className="py-3 px-3 text-right">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger>
+                          <Button variant="ghost" size="icon" className="h-8 w-8"><MoreVertical className="h-4 w-4" /></Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuLabel>Update Status</DropdownMenuLabel>
+                          <DropdownMenuSeparator />
+                          <DropdownMenuItem onClick={() => updateOrderStatus(order.id, "confirmed")}><CheckCircle className="mr-2 h-4 w-4 text-blue-500" /> Confirm</DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => updateOrderStatus(order.id, "processing")}><Package className="mr-2 h-4 w-4 text-purple-500" /> Process</DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => updateOrderStatus(order.id, "shipped")}><Truck className="mr-2 h-4 w-4 text-orange-500" /> Ship</DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => updateOrderStatus(order.id, "delivered")}><CheckCircle className="mr-2 h-4 w-4 text-emerald-500" /> Deliver</DropdownMenuItem>
+                          <DropdownMenuSeparator />
+                          <DropdownMenuItem onClick={() => updateOrderStatus(order.id, "cancelled")} className="text-destructive"><XCircle className="mr-2 h-4 w-4" /> Cancel</DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => updateOrderStatus(order.id, "returned")}><RotateCcw className="mr-2 h-4 w-4" /> Return</DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </td>
                   </tr>
                 ))}
               </tbody>

@@ -2,12 +2,13 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { mockOrders } from "@/data/mock-orders";
+import { useDashboard } from "@/providers/dashboard-provider";
 import { orderStatusColors } from "@/lib/constants";
 import Link from "next/link";
 
 export function RecentOrders() {
-  const recent = mockOrders.slice(0, 6);
+  const { orders } = useDashboard();
+  const recent = orders.slice(0, 6);
 
   return (
     <Card className="col-span-full lg:col-span-2">

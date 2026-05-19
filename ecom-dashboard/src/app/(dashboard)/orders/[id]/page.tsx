@@ -1,17 +1,30 @@
+"use client";
+
+import { use } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { mockOrders } from "@/data/mock-orders";
 import { orderStatusColors, paymentStatusColors } from "@/lib/constants";
 import { ArrowLeft, Printer, MapPin, CreditCard, Package } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { useDashboard } from "@/providers/dashboard-provider";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-export default async function OrderDetailPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
-  const order = mockOrders.find((o) => o.id === id);
-  if (!order) notFound();
+export default function OrderDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params);
+  const { orders, updateOrderStatus } = useDashboard();
+  const order = orders.find((o) => o.id === id);
+  
+  if (!order) {
+    return (
+      <div className="flex flex-col items-center justify-center py-12">
+        <h2 className="text-2xl font-bold">Order not found</h2>
+        <Link href="/orders" className="text-primary hover:underline mt-4">Return to Orders</Link>
+      </div>
+    );
+  }
 
   const timeline = [
     { label: "Order Placed", date: order.createdAt, done: true },
@@ -23,7 +36,7 @@ export default async function OrderDetailPage({ params }: { params: Promise<{ id
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center gap-4">
         <Link href="/orders">
           <Button variant="ghost" size="icon"><ArrowLeft className="h-4 w-4" /></Button>
         </Link>
@@ -31,7 +44,24 @@ export default async function OrderDetailPage({ params }: { params: Promise<{ id
           <h1 className="text-2xl font-bold tracking-tight">Order {order.id}</h1>
           <p className="text-sm text-muted-foreground">Placed on {new Date(order.createdAt).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}</p>
         </div>
-        <Button variant="outline" size="sm"><Printer className="mr-2 h-4 w-4" />Print Invoice</Button>
+        <div className="flex items-center gap-2">
+          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+          <Select value={order.status} onValueChange={(val: any) => updateOrderStatus(order.id, val)}>
+            <SelectTrigger className="w-[140px]">
+              <SelectValue placeholder="Status" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="pending">Pending</SelectItem>
+              <SelectItem value="confirmed">Confirmed</SelectItem>
+              <SelectItem value="processing">Processing</SelectItem>
+              <SelectItem value="shipped">Shipped</SelectItem>
+              <SelectItem value="delivered">Delivered</SelectItem>
+              <SelectItem value="cancelled">Cancelled</SelectItem>
+              <SelectItem value="returned">Returned</SelectItem>
+            </SelectContent>
+          </Select>
+          <Button variant="outline" size="sm"><Printer className="mr-2 h-4 w-4" />Print</Button>
+        </div>
       </div>
 
       <div className="grid gap-4 md:grid-cols-3">
