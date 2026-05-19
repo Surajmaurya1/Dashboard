@@ -64,9 +64,11 @@ export default function OverviewPage() {
 
       {/* Bottom Row */}
       <div className="grid gap-4 grid-cols-1 lg:grid-cols-3">
-        <RecentOrders />
-        <div className="space-y-4">
+        <div className="lg:col-span-2 space-y-4">
           <LowStockAlerts />
+          <RecentOrders />
+        </div>
+        <div className="space-y-4">
           <TopProducts />
           <ActivityFeed />
         </div>
