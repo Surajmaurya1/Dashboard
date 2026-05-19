@@ -107,9 +107,7 @@ export default function OrdersPage() {
                     <td className="py-3 px-3 text-muted-foreground hidden lg:table-cell">{new Date(order.createdAt).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}</td>
                     <td className="py-3 px-3 text-right">
                       <DropdownMenu>
-                        <DropdownMenuTrigger>
-                          <Button variant="ghost" size="icon" className="h-8 w-8"><MoreVertical className="h-4 w-4" /></Button>
-                        </DropdownMenuTrigger>
+                        <DropdownMenuTrigger render={<Button variant="ghost" size="icon" className="h-8 w-8"><MoreVertical className="h-4 w-4" /></Button>} />
                         <DropdownMenuContent align="end">
                           <DropdownMenuLabel>Update Status</DropdownMenuLabel>
                           <DropdownMenuSeparator />
