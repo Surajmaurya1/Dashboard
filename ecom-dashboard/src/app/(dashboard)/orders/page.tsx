@@ -109,15 +109,17 @@ export default function OrdersPage() {
                       <DropdownMenu>
                         <DropdownMenuTrigger render={<Button variant="ghost" size="icon" className="h-8 w-8"><MoreVertical className="h-4 w-4" /></Button>} />
                         <DropdownMenuContent align="end">
-                          <DropdownMenuLabel>Update Status</DropdownMenuLabel>
-                          <DropdownMenuSeparator />
-                          <DropdownMenuItem onClick={() => updateOrderStatus(order.id, "confirmed")}><CheckCircle className="mr-2 h-4 w-4 text-blue-500" /> Confirm</DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => updateOrderStatus(order.id, "processing")}><Package className="mr-2 h-4 w-4 text-purple-500" /> Process</DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => updateOrderStatus(order.id, "shipped")}><Truck className="mr-2 h-4 w-4 text-orange-500" /> Ship</DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => updateOrderStatus(order.id, "delivered")}><CheckCircle className="mr-2 h-4 w-4 text-emerald-500" /> Deliver</DropdownMenuItem>
-                          <DropdownMenuSeparator />
-                          <DropdownMenuItem onClick={() => updateOrderStatus(order.id, "cancelled")} className="text-destructive"><XCircle className="mr-2 h-4 w-4" /> Cancel</DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => updateOrderStatus(order.id, "returned")}><RotateCcw className="mr-2 h-4 w-4" /> Return</DropdownMenuItem>
+                          <DropdownMenuGroup>
+                            <DropdownMenuLabel>Update Status</DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem onClick={() => updateOrderStatus(order.id, "confirmed")}><CheckCircle className="mr-2 h-4 w-4 text-blue-500" /> Confirm</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => updateOrderStatus(order.id, "processing")}><Package className="mr-2 h-4 w-4 text-purple-500" /> Process</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => updateOrderStatus(order.id, "shipped")}><Truck className="mr-2 h-4 w-4 text-orange-500" /> Ship</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => updateOrderStatus(order.id, "delivered")}><CheckCircle className="mr-2 h-4 w-4 text-emerald-500" /> Deliver</DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem onClick={() => updateOrderStatus(order.id, "cancelled")} className="text-destructive"><XCircle className="mr-2 h-4 w-4" /> Cancel</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => updateOrderStatus(order.id, "returned")}><RotateCcw className="mr-2 h-4 w-4" /> Return</DropdownMenuItem>
+                          </DropdownMenuGroup>
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </td>
