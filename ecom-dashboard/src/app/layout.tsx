@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { NotificationProvider } from "@/components/providers/notification-provider";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
@@ -31,7 +32,9 @@ export default function RootLayout({
           disableTransitionOnChange={false}
         >
           <TooltipProvider delay={0}>
-            {children}
+            <NotificationProvider>
+              {children}
+            </NotificationProvider>
           </TooltipProvider>
           <Toaster richColors position="top-right" />
         </ThemeProvider>
