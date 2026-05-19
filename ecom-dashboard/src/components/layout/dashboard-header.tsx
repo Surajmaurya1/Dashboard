@@ -58,7 +58,7 @@ export function DashboardHeader() {
       <div className="ml-auto flex items-center gap-1.5">
         <SearchCommand />
 
-        <Button variant="ghost" size="icon" className="relative h-9 w-9" render={<Link href="/notifications" />}>
+        <Button variant="ghost" size="icon" className="relative h-9 w-9" render={<Link href="/notifications" />} nativeButton={false}>
           <Bell className="h-4 w-4" />
           {unreadCount > 0 && (
             <Badge className="absolute -top-0.5 -right-0.5 h-4 w-4 p-0 flex items-center justify-center text-[10px] bg-destructive text-white border-2 border-background">
