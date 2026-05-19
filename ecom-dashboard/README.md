@@ -1,7 +1,5 @@
 # ShopPulse | Advanced E-commerce Admin Dashboard
 
-![ShopPulse Banner](https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3)
-
 ShopPulse is a high-performance, modern administrative dashboard designed for large-scale e-commerce platforms. Built with the latest technologies, it provides a seamless experience for managing orders, products, vendors, and customers with real-time analytics and a premium UI/UX.
 
 ## ✨ Features
@@ -66,10 +64,6 @@ src/
 ├── lib/               # Utilities, constants, and hooks
 └── styles/            # Global styles and Tailwind config
 ```
-
-## 📸 Screenshots
-
-*Coming Soon - We are finalizing the visual documentation.*
 
 ## 📄 License
 
