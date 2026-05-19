@@ -3,20 +3,21 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Bar, BarChart, XAxis, YAxis, CartesianGrid } from "recharts";
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
-import { mockOrders } from "@/data/mock-orders";
+import { useDashboard } from "@/providers/dashboard-provider";
 
 const statusOrder = ["pending", "confirmed", "processing", "shipped", "delivered", "cancelled", "returned"] as const;
-
-const ordersByStatus = statusOrder.map((status) => ({
-  status: status.charAt(0).toUpperCase() + status.slice(1),
-  count: mockOrders.filter((o) => o.status === status).length,
-}));
 
 const chartConfig = {
   count: { label: "Orders", color: "var(--color-chart-1)" },
 };
 
 export function OrdersChart() {
+  const { orders } = useDashboard();
+
+  const ordersByStatus = statusOrder.map((status) => ({
+    status: status.charAt(0).toUpperCase() + status.slice(1),
+    count: orders.filter((o) => o.status === status).length,
+  }));
   return (
     <Card>
       <CardHeader>

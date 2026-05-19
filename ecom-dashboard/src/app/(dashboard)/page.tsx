@@ -6,6 +6,7 @@ import { OrdersChart } from "@/components/dashboard/orders-chart";
 import { TopProducts } from "@/components/dashboard/top-products";
 import { RecentOrders } from "@/components/dashboard/recent-orders";
 import { ActivityFeed } from "@/components/dashboard/activity-feed";
+import { LowStockAlerts } from "@/components/dashboard/low-stock-alerts";
 import { useDashboard } from "@/providers/dashboard-provider";
 import { mockOverview } from "@/data/mock-analytics";
 import {
@@ -65,6 +66,7 @@ export default function OverviewPage() {
       <div className="grid gap-4 grid-cols-1 lg:grid-cols-3">
         <RecentOrders />
         <div className="space-y-4">
+          <LowStockAlerts />
           <TopProducts />
           <ActivityFeed />
         </div>
